@@ -9,16 +9,7 @@ import BusRouteOption from "../types/BusRouteOption";
 
 const Main = () => {
   const [busRoutes, setBusRoutes] = useState<BusRoute[]>([])
-  const [busRouteOptions, setBusRouteOptions] = useState<BusRouteOption[]>([])
   const [routeSelection, setRouteSelection] = useState<string | undefined>();
-
-  const convertRoutesToOptions = (busRoutes: BusRoute[]) => {
-    const busRouteOptions: BusRouteOption[] = [];
-    busRoutes.map(route => busRouteOptions.push({
-      label: `${route.name} (to ${route.bus_stops[route.bus_stops.length - 1]['name']})`,
-      value: route}))
-    setBusRouteOptions(busRouteOptions);
-  }
 
   useEffect(() => {
     fetch('http://ipa-002.ucd.ie/api/bus_routes/')
