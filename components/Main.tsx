@@ -32,8 +32,16 @@ const Main = () => {
         routeSelection={routeSelection}
         setRouteSelection={setRouteSelection}
       />
-      <BusStopDropdown label={'Start'}/>
-      <BusStopDropdown label={'Finish'}/>
+      <BusStopDropdown
+        busRoutes={busRoutes}
+        routeSelection={routeSelection}
+        label={'Start'}
+      />
+      <BusStopDropdown
+        busRoutes={busRoutes}
+        routeSelection={routeSelection}
+        label={'Finish'}
+      />
       <Map/>
     </View>
   );
