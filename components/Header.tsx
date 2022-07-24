@@ -1,9 +1,11 @@
 import {Appbar} from "react-native-paper";
 
-export default function Header() {
+const Header = () => {
   return (
     <Appbar.Header>
-      <Appbar.Content title={'BusMe!'}/>
+      <Appbar.Content title={'BusMe! (Beta)'}/>
     </Appbar.Header>
   );
 }
+
+export default Header;
