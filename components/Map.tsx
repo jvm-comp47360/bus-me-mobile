@@ -1,4 +1,4 @@
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Marker, Region} from 'react-native-maps';
 import BusRoute from "../types/BusRoute";
 import MapViewDirections, {MapViewDirectionsDestination, MapViewDirectionsOrigin} from 'react-native-maps-directions';
 import {REACT_APP_GOOGLE_KEY} from '@env';
@@ -53,6 +53,8 @@ const Map = ({
         origin={origin}
         destination={destination}
         apikey={REACT_APP_GOOGLE_KEY}
+        strokeWidth={3}
+        strokeColor={'blue'}
        />
         <Marker
           coordinate={{
@@ -78,15 +80,17 @@ const Map = ({
     }
   }
 
+  const selectionRegion: Region = {
+    latitude: 53.08047559137039,
+    longitude: -6.255868208190408,
+    latitudeDelta: 0.5,
+    longitudeDelta: 0.5
+  }
+
   return (
     <MapView
       style={{height: '100%', width: '100%'}}
-      initialRegion={{
-        latitude: 53.22947559137039,
-        longitude: -6.269868208190408,
-        latitudeDelta: 0.1,
-        longitudeDelta: 0.1
-      }}
+      initialRegion={selectionRegion}
       >
       {
         (currentRoute && !prediction) ? currentRoute.bus_stops.map((stop) =>
