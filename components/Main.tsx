@@ -88,7 +88,7 @@ const Main = () => {
           const num_stops_segment = getNumStopsSegment(route, start, finish);
           const time = getSeconds(new Date()).toString();
 
-          fetch(`http://ipa-002.ucd.ie/api/prediction/${route}/${num_stops_segment}/${time}`)
+          fetch(`http://ipa-002.ucd.ie/api/prediction/${route.id}/${num_stops_segment}/${time}`)
             .then((response) => {
               if (response.ok) {
                 return response.json() as Promise<Prediction>;
@@ -98,7 +98,6 @@ const Main = () => {
             })
             .then((data) => {
               const prediction: number = Math.round(data['prediction'] * 10) / 10
-              console.log(prediction)
               setPrediction(prediction)
             })
             .catch((error) => console.log(error));
