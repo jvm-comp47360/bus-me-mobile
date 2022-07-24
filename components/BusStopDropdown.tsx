@@ -33,6 +33,8 @@ const BusStopDropdown = ({busRoutes, routeSelection, selection, setSelection, la
     return [];
   }
 
+  const busStopOptions = getBusStops(busRoutes, routeSelection);
+
   return (
     <DropDown
       label={label}
@@ -42,7 +44,7 @@ const BusStopDropdown = ({busRoutes, routeSelection, selection, setSelection, la
       showDropDown={() => setShowDropdown(true)}
       value={selection}
       setValue={setSelection}
-      list={getBusStops(busRoutes, routeSelection)}
+      list={busStopOptions}
     />
   );
 }

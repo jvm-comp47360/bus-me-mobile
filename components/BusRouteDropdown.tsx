@@ -1,6 +1,5 @@
 import DropDown from "react-native-paper-dropdown";
 import {Dispatch, SetStateAction, useState} from "react";
-import MOCK_BUS_ROUTES from '../mockdata/MOCK_BUS_ROUTES.json';
 import BusRoute from "../types/BusRoute";
 
 
@@ -8,6 +7,8 @@ import BusRoute from "../types/BusRoute";
 interface Props {
   busRoutes: BusRoute[];
   routeSelection: string | undefined;
+  setStartSelection: Dispatch<SetStateAction<string | undefined>>;
+  setFinishSelection: Dispatch<SetStateAction<string | undefined>>;
   setRouteSelection: Dispatch<SetStateAction<string | undefined>>;
 }
 
@@ -16,6 +17,8 @@ interface Props {
   const BusRouteDropdown = ({
                           busRoutes,
                           routeSelection,
+                          setStartSelection,
+                          setFinishSelection,
                           setRouteSelection
                         }: Props) => {
     const [showDropDown, setShowDropdown] = useState(false);
@@ -32,6 +35,8 @@ interface Props {
       return busRouteOptions;
     }
 
+    const busRouteOptions = getBusRouteOptions(busRoutes);
+
     return (
       <DropDown
         label={'Route'}
@@ -40,8 +45,13 @@ interface Props {
         onDismiss={() => setShowDropdown(false)}
         showDropDown={() => setShowDropdown(true)}
         value={routeSelection}
-        setValue={setRouteSelection}
-        list={getBusRouteOptions(busRoutes)}
+        setValue={(_value) => {
+            setRouteSelection(_value);
+            setStartSelection(undefined);
+            setFinishSelection(undefined);
+          }
+        }
+        list={busRouteOptions}
       />
     );
   }
