@@ -5,7 +5,7 @@ import BusRouteDropdown from "./BusRouteDropdown";
 import BusStopDropdown from "./BusStopDropdown";
 import {useEffect, useState} from "react";
 import BusRoute from "../types/BusRoute";
-import {Button} from "react-native-paper";
+import {Button, Card, Paragraph, Title} from "react-native-paper";
 import BusStop from "../types/BusStop";
 
 type Prediction = {
@@ -44,68 +44,81 @@ const Main = () => {
     return Math.abs(finish_stop_number - start_stop_number);
   }
 
+  const getPrediction = () => {
+    if (!routeSelection || !startSelection || !finishSelection) {
+      return;
+    }
+    const route: BusRoute | undefined = busRoutes.find((route) => route.id === routeSelection);
+
+    if (!route) {
+      return;
+    }
+
+    const start: BusStop | undefined = route.bus_stops.find((busStop) => busStop.id === startSelection);
+    const finish: BusStop | undefined = route.bus_stops.find((busStop) => busStop.id === finishSelection);
+
+    if (!start || !finish) {
+      return;
+    }
+
+    const num_stops_segment = getNumStopsSegment(route, start, finish);
+    const time = getSeconds(new Date()).toString();
+
+    fetch(`http://ipa-002.ucd.ie/api/prediction/${route.id}/${num_stops_segment}/${time}`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json() as Promise<Prediction>;
+        } else {
+          throw new Error();
+        }
+      })
+      .then((data) => {
+        const prediction: number = Math.round(data['prediction'] * 10) / 10
+        setPrediction(prediction)
+      })
+      .catch((error) => console.log(error));
+    console.log(prediction)
+  }
+
   return (
     <View>
       <Header/>
-      <BusRouteDropdown
-        busRoutes={busRoutes}
-        routeSelection={routeSelection}
-        setRouteSelection={setRouteSelection}
-      />
-      <BusStopDropdown
-        busRoutes={busRoutes}
-        routeSelection={routeSelection}
-        selection={startSelection}
-        setSelection={setStartSelection}
-        label={'Start'}
-      />
-      <BusStopDropdown
-        busRoutes={busRoutes}
-        routeSelection={routeSelection}
-        selection={finishSelection}
-        setSelection={setFinishSelection}
-        label={'Finish'}
-      />
-      <Button
-        mode={"contained"}
-        onPress={() => {
-          if (!routeSelection || !startSelection || !finishSelection) {
-            return;
-          }
-          const route: BusRoute | undefined = busRoutes.find((route) => route.id === routeSelection);
-
-          if (!route) {
-            return;
-          }
-
-          const start: BusStop | undefined = route.bus_stops.find((busStop) => busStop.id === startSelection);
-          const finish: BusStop | undefined = route.bus_stops.find((busStop) => busStop.id === finishSelection);
-
-          if (!start || !finish) {
-            return;
-          }
-
-          const num_stops_segment = getNumStopsSegment(route, start, finish);
-          const time = getSeconds(new Date()).toString();
-
-          fetch(`http://ipa-002.ucd.ie/api/prediction/${route.id}/${num_stops_segment}/${time}`)
-            .then((response) => {
-              if (response.ok) {
-                return response.json() as Promise<Prediction>;
-              } else {
-                throw new Error();
-              }
-            })
-            .then((data) => {
-              const prediction: number = Math.round(data['prediction'] * 10) / 10
-              setPrediction(prediction)
-            })
-            .catch((error) => console.log(error));
-          console.log(prediction)
-        }}
-      >
-        BusMe!
-      </Button>
+      {(prediction) ?
+        <Card>
+          <Card.Content>
+            <Title>Your journey time will be:</Title>
+            <Paragraph>{prediction} minutes</Paragraph>
+          </Card.Content>
+        </Card>
+        :
+        <>
+        <BusRouteDropdown
+          busRoutes={busRoutes}
+          routeSelection={routeSelection}
+          setRouteSelection={setRouteSelection}
+        />
+        <BusStopDropdown
+          busRoutes={busRoutes}
+          routeSelection={routeSelection}
+          selection={startSelection}
+          setSelection={setStartSelection}
+          label={'Start'}
+        />
+        <BusStopDropdown
+          busRoutes={busRoutes}
+          routeSelection={routeSelection}
+          selection={finishSelection}
+          setSelection={setFinishSelection}
+          label={'Finish'}
+        />
+        <Button
+          mode={"contained"}
+          onPress={() => getPrediction()}
+        >
+          BusMe!
+        </Button>
+      </>
+      }
       <Map/>
 
     </View>
