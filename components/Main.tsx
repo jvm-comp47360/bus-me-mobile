@@ -80,6 +80,13 @@ const Main = () => {
     console.log(prediction)
   }
 
+  const resetSelections = () => {
+    setRouteSelection(undefined);
+    setStartSelection(undefined);
+    setFinishSelection(undefined);
+    setPrediction(undefined);
+  }
+
   return (
     <View>
       <Header/>
@@ -89,6 +96,12 @@ const Main = () => {
             <Title>Your journey time will be:</Title>
             <Paragraph>{prediction} minutes</Paragraph>
           </Card.Content>
+          <Button
+            mode={"contained"}
+            onPress={() => resetSelections()}
+          >
+            Try a Different Journey!
+          </Button>
         </Card>
         :
         <>
@@ -120,7 +133,6 @@ const Main = () => {
       </>
       }
       <Map/>
-
     </View>
   );
 }
