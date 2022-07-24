@@ -94,7 +94,7 @@ const Main = () => {
         <Card>
           <Card.Content>
             <Title>Your journey time will be:</Title>
-            <Paragraph>{prediction} minutes</Paragraph>
+            <Title>{prediction} minutes</Title>
           </Card.Content>
           <Button
             mode={"contained"}
