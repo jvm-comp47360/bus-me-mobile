@@ -5,7 +5,7 @@ import BusRouteDropdown from "./BusRouteDropdown";
 import BusStopDropdown from "./BusStopDropdown";
 import {useEffect, useState} from "react";
 import BusRoute from "../types/BusRoute";
-import {Button, Card, Paragraph, Title} from "react-native-paper";
+import {Button, Card, Title} from "react-native-paper";
 import BusStop from "../types/BusStop";
 
 type Prediction = {
@@ -63,8 +63,9 @@ const Main = () => {
 
     const num_stops_segment = getNumStopsSegment(route, start, finish);
     const time = getSeconds(new Date()).toString();
+    console.log(`http://ipa-002.ucd.ie/api/prediction/${route.name}/${num_stops_segment}/${time}`)
 
-    fetch(`http://ipa-002.ucd.ie/api/prediction/${route.id}/${num_stops_segment}/${time}`)
+    fetch(`http://ipa-002.ucd.ie/api/prediction/${route.name}/${num_stops_segment}/${time}`)
       .then((response) => {
         if (response.ok) {
           return response.json() as Promise<Prediction>;
@@ -137,6 +138,9 @@ const Main = () => {
       <Map
         busRoutes={busRoutes}
         routeSelection={routeSelection}
+        startSelection={startSelection}
+        finishSelection={finishSelection}
+        prediction={prediction}
       />
     </View>
   );
