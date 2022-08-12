@@ -12,6 +12,9 @@ type Prediction = {
   prediction: number;
 }
 
+// Please see core repository for comments and sources - the code is largely the same and has been
+// tweaked slightly in line with React Native.
+
 const Main = () => {
   const [busRoutes, setBusRoutes] = useState<BusRoute[]>([])
   const [routeSelection, setRouteSelection] = useState<string | undefined>();

@@ -12,6 +12,9 @@ export interface Props {
   prediction: number | undefined;
 }
 
+// Please see core repository for comments and sources - the code is largely the same and has been
+// tweaked slightly in line with React Native.
+
 const Map = ({
                busRoutes,
                routeSelection,
