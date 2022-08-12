@@ -1,6 +1,12 @@
 # BusMe! (Mobile)
 ![reactnative](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)![typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)![ios](https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white)![android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 
+<p align="center">
+<img src="readme_images/mobile1.jpg" width="200px"> 
+<img src="readme_images/mobile2.jpg" width="200px">
+<img src="readme_images/mobile3.jpg" width="200px">
+</p> 
+
 This is a React Native version of the BusMe web application, which runs on both iOS and Android.
 It is currently not as fully featured as the website version, but still contains a fully functional minimum viable product. 
 It is a prototype showing how the conversion from web to mobile would work.
