@@ -63,9 +63,8 @@ const Main = () => {
 
     const num_stops_segment = getNumStopsSegment(route, start, finish);
     const time = getSeconds(new Date()).toString();
-    console.log(`http://ipa-002.ucd.ie/api/prediction/${route.name}/${num_stops_segment}/${time}`)
 
-    fetch(`http://ipa-002.ucd.ie/api/prediction/${route.name}/${num_stops_segment}/${time}`)
+    fetch(`http://ipa-002.ucd.ie/api/prediction/${route.name.split(' ')[0]}/${num_stops_segment}/${time}`)
       .then((response) => {
         if (response.ok) {
           return response.json() as Promise<Prediction>;
